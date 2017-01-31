@@ -11,8 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     // return view('welcome');
+//     return view('home');
+// });
+
+Route::get('/', 'ReminderController@home');
 
 Route::get('/profile', 'ProfileController@getProfile');
