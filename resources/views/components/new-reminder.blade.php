@@ -1,9 +1,9 @@
-<form action="/reminder/new" method="post">
+<form action="/reminders" method="post">
   {{ csrf_field() }}
 
   <div class="form-group">
     <label for="reminder">New Reminder</label>
-    <textarea class="form-control" name="reminder" id="reminder" rows="8" cols="80"></textarea>
+    <textarea class="form-control" name="body" id="reminder" rows="8" cols="80"></textarea>
   </div>
 
   <div class="form-group">

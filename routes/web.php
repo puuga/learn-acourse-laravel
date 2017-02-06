@@ -11,11 +11,12 @@
 |
 */
 
-// Route::get('/', function () {
-//     // return view('welcome');
-//     return view('home');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get('/', 'ReminderController@home');
+Route::get('/reminders', 'ReminderController@index')->name('reminders_index');
+Route::post('/reminders', 'ReminderController@store');
+Route::delete('/reminders/{id}', 'ReminderController@delete')->name('reminders_delete');
 
 Route::get('/profile', 'ProfileController@getProfile');
