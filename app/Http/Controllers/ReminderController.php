@@ -5,26 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Reminder;
+use App\ReminderType;
+
 class ReminderController extends Controller
 {
   public function index() {
-    $reminders = DB::table('reminders')->get();
-    return view('home', ['reminders' => $reminders]);
+    // $foo = new ReminderType;
+    // $foo->type_name = "Important";
+    // $foo->save();
+    //
+    // $boo = new ReminderType;
+    // $boo->type_name = "Super Ultimate Important";
+    // $boo->save();
+
+
+    $reminders = Reminder::all();
+    $reminderTypes = ReminderType::all();
+
+    // dd($reminders);
+
+    return view('home', [
+      'reminders' => $reminders,
+      'reminderTypes' => $reminderTypes,
+    ]);
   }
 
   public function store(Request $request) {
     if ($request->has('body')) {
-      DB::table('reminders')->insert([
-        'body' => $request->body,
-        'did_finish' => false
-      ]);
+      $reminder = new Reminder;
+      // $reminder->user_id = null;
+      $reminder->reminder_type_id = $request->reminderType;
+      $reminder->body = $request->body;
+      $reminder->did_finish = false;
+
+      $reminder->save();
     }
     return back()->with("status", "OK, and don't forget!");
   }
 
   public function delete($id='0') {
     if ($id !== '0') {
-      DB::table('reminders')->where('id', $id)->delete();
+      $reminder = Reminder::find($id);
+      $reminder->delete();
     }
     return back()->with("status", "Good job!");
   }
